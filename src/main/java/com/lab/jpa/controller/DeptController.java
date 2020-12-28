@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/dept")
@@ -15,7 +17,7 @@ public class DeptController {
     @Autowired
     private CompanyDao companyDao;
     
-    @RequestMapping("/")
+    @RequestMapping(value = {"/"}, method = {RequestMethod.GET})
     public String read(Model model){
         List dept_list = companyDao.queryForAllDepts();
         Department dept = new Department();
@@ -24,5 +26,12 @@ public class DeptController {
         model.addAttribute("dept_list", dept_list);
         model.addAttribute("dept", dept);
         return "dept_page";
+    }
+    
+    @RequestMapping(value = {"/"}, method = {RequestMethod.POST})
+    public String create(@ModelAttribute("dept") Department dept){
+        // 儲存資料
+        companyDao.saveDept(dept);
+        return "redirect: ./";
     }
 }
