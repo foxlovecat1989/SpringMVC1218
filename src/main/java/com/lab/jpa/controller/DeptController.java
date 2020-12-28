@@ -21,8 +21,8 @@ public class DeptController {
     public String read(Model model){
         List dept_list = companyDao.queryForAllDepts();
         Department dept = new Department();
-        dept.setId(12);
-        dept.setName("Sale");
+        // dept.setId(12);
+        // dept.setName("Sale");
         model.addAttribute("dept_list", dept_list);
         model.addAttribute("dept", dept);
         return "dept_page";
